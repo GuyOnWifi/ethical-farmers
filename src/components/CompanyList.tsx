@@ -1,45 +1,7 @@
 import { Icon } from "@iconify/react";
 import SearchBar from "./SearchBar";
 import CompanyItem from "./CompanyItem";
-
-const COMPANIES_LIST = [
-    {
-        imageURL: "/costco.svg",
-        name: "Costco Wholesale",
-        certificates: 2,
-        rating: 4.5,
-    },
-    {
-        imageURL: "/loblaws.svg",
-        name: "Loblaws",
-        certificates: 2,
-        rating: 4.5,
-    },
-    {
-        imageURL: "/walmart.svg",
-        name: "Walmart",
-        certificates: 2,
-        rating: 4.5,
-    },
-    {
-        imageURL: "/sobeys.svg",
-        name: "Sobeys",
-        certificates: 2,
-        rating: 4.5,
-    },
-    {
-        imageURL: "/freshco.svg",
-        name: "FreshCo",
-        certificates: 2,
-        rating: 4.5,
-    },
-    {
-        imageURL: "/metro.svg",
-        name: "Metro",
-        certificates: 2,
-        rating: 4.5,
-    },
-]
+import COMPANIES_LIST from "@/lib/data";
 
 export default function CompanyList() {
     return (
@@ -69,8 +31,8 @@ export default function CompanyList() {
                 </div>     
             </div>
             <div className="flex flex-row flex-wrap gap-4 justify-center relative pt-8 gap-y-8">
-                {COMPANIES_LIST.map((comp) => {
-                    return <CompanyItem company={comp} key={comp.name} />
+                {Object.entries(COMPANIES_LIST).map(([id, comp]) => {
+                    return <CompanyItem company={comp} key={comp.name} id={id} />
                 })}
             </div>
             <div className="text-right cursor-pointer hover:underline">More &gt;</div>
