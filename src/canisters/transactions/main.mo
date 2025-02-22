@@ -3,34 +3,34 @@ import Nat "mo:base/Nat";
 import Text "mo:base/Text";
 import Time "mo:base/Time";
 
-// Define a supplier
-type Supplier = {
-    name : Text;
-    certified_date : Time.Time;
-    products : [Nat];
-};
-
-// Define a transaction type
-type Transaction = {
-    date : Time.Time;
-    productId : Nat;
-    location : Text;
-    seller : Supplier;
-    buyer : Supplier;
-};
-
-// Define a product type
-type Product = {
-    id : Nat;
-    name : Text;
-    transHistory : [Transaction];
-};
-
 actor transactionDB {
+
+    // Define a supplier
+    type Supplier = {
+        name : Text;
+        certified_date : Time.Time;
+        products : [Nat];
+    };
+
+    // Define a transaction type
+    type Transaction = {
+        date : Time.Time;
+        productId : Nat;
+        location : Text;
+        seller : Supplier;
+        buyer : Supplier;
+    };
+
+    // Define a product type
+    type Product = {
+        id : Nat;
+        name : Text;
+        transHistory : [Transaction];
+    };
 
     // Store all products
     private var products : [Product] = [];
-    private var suppliers: [Supplier] = [];
+    private var suppliers : [Supplier] = [];
 
     // Function to add a new product
     public shared func addProduct(id : Nat, name : Text) : async () {
@@ -67,19 +67,19 @@ actor transactionDB {
         return [];
     };
 
-    // Function to get all products 
+    // Function to get all products
     public shared query func getProducts() : async [Product] {
         return products;
     };
 
     // Add a supplier
-    public shared func addSupplier(s: Supplier) : async () {
+    public shared func addSupplier(s : Supplier) : async () {
         suppliers := Array.append(suppliers, [s]);
         return;
     };
 
     // Get a supplier by its farm name
-    public shared query func getSupplier(id: Text) : async ?Supplier {
+    public shared query func getSupplier(id : Text) : async ?Supplier {
         return Array.find<Supplier>(suppliers, func(s) { s.name == id });
     };
 
