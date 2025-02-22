@@ -1,0 +1,12 @@
+{
+    "canisters": {
+      "supplier_database": {
+        "main": "src/canisters/suppliers/main.mo",
+        "type": "motoko"
+      },
+      "transaction_database": {
+        "main": "src/canisters/transactions/main.mo",
+        "type": "motoko"
+      }
+    }
+  }
