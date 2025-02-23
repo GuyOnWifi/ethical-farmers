@@ -1,5 +1,5 @@
 // page.tsx (Server Component)
-import COMPANIES_LIST from "@/lib/data"
+import { COMPANIES_LIST } from "@/lib/data"
 import ClientPage from './client-page';
 
 export default async function Page({ params }: { params: { id: string } }) {
