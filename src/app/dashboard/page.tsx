@@ -2,12 +2,14 @@
 
 import { Icon } from "@iconify/react";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { transaction_database } from "@/declarations/transaction_database";
 
 // Custom Input Component
-const Input = ({ 
-  className, 
+const Input = ({
+  className,
   placeholder,
-  ...props 
+  ...props
 }: React.InputHTMLAttributes<HTMLInputElement>) => {
   return (
     <input
@@ -40,6 +42,7 @@ const Button = ({
         variant === "outline" && "border border-[#78D025] text-[#78D025] hover:bg-[#78D025]/10",
         className
       )}
+      
       {...props}
     >
       {children}
@@ -47,11 +50,70 @@ const Button = ({
   );
 };
 
+
+
+
 export default function Page() {
+
+  const [storeMsg, setStoreMsg] = useState<string>("");
+  const [produceMsg, setProduceMsg] = useState<string>("");
+
+  
+  const [nameInput, setNameInput] = useState("");
+  const [produceInput, setProduceInput] = useState("");
+  const [farmInput, setFarmInput] = useState("");
+  const [storeInput, setStoreInput] = useState("");
+
+  const onStoreClick = async () => {
+    if (!nameInput) {
+      window.alert("Please input a name!");
+      return;
+    };
+    setStoreMsg("Setting...")
+    try {
+      await transaction_database.addSupplier({
+        name: nameInput,
+        certified_date: BigInt(Date.now()),
+        products: []
+      })
+      setStoreMsg("Success!");
+    } catch(err) {
+      setStoreMsg("Something went wrong. Try again.");
+    }
+    setTimeout(() => {
+      setStoreMsg("");
+    }, 2000)
+  }
+
+  const onProduceAdd = async () => {
+    if (!produceInput || !farmInput || !storeInput) {
+      window.alert("Please input all fields!");
+      return;
+    };
+
+    setProduceMsg("Setting...")
+    try {
+      await transaction_database.addTransaction({
+        productId: BigInt(Math.floor(Math.random() * 10000)),
+        productName: produceInput,
+        date: BigInt(Date.now()),
+        location: "here",
+        seller: farmInput,
+        buyer: storeInput
+      })
+      setProduceMsg("Success!");
+    } catch(err) {
+      setProduceMsg("Something went wrong. Try again.");
+    }
+    setTimeout(() => {
+      setProduceMsg("");
+    }, 2000)
+  }
+
   return (
     <div className="min-h-screen relative">
       {/* Background Image */}
-      <div 
+      <div
         className="fixed inset-0 w-full h-full z-0"
         style={{
           backgroundImage: "url('/DashBG.png')",
@@ -67,7 +129,7 @@ export default function Page() {
         {/* Header Section */}
         <div className="text-center mb-12">
           <h1 className="text-2xl font-bold text-black mb-4 text-start ">
-            Add Your Store to Our Database
+            Add Your Data to Our Database
           </h1>
           <p className="text-lg text-gray-700 mx-auto text-start ">
             We believe in shaping a transparent future for agriculture for everybody.
@@ -78,14 +140,22 @@ export default function Page() {
         <div className="flex gap-6">
           {/* Left Section - 1/3 width */}
           <div className="w-1/3 bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg">
+            <h1 className="text-[#78D025] pb-4 font-bold">Add your store to our database</h1>
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-[#78D025] mb-1">Name</label>
-                <Input placeholder="Enter name" />
+                <Input id="name" placeholder="Enter name" value={farmInput} onChange={(e) => setFarmInput(e.target.value)} />
               </div>
               <div>
                 <label className="block text-sm font-medium text-[#78D025] mb-1">Certifications</label>
-                <Input placeholder="Enter certifications" />
+                <Input id="certifications" placeholder="Enter certifications" />
+              </div>
+              <div className="flex justify-end gap-4 items-center">
+                {storeMsg && <span className="text-[#78D025] ml-auto">{storeMsg}</span>}
+                <Button variant="outline" className="flex items-center gap-2" onClick={onStoreClick}>
+                  <Icon icon="mdi:plus" className="w-5 h-5" />
+                  Add
+                </Button>
               </div>
             </div>
           </div>
@@ -95,10 +165,11 @@ export default function Page() {
 
           {/* Right Section - 2/3 width */}
           <div className="flex-grow bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg">
+            <h1 className="text-[#78D025] pb-4 font-bold">Add your purchases to our database</h1>
             {/* Produce Field */}
             <div className="mb-6">
               <label className="block text-sm font-medium text-[#78D025] mb-1">Produce</label>
-              <Input placeholder="Enter produce details" className="w-full" />
+              <Input id="produce" placeholder="Enter produce details" className="w-full" value={produceInput} onChange={(e) => setProduceInput(e.target.value)} />
             </div>
 
             {/* 2x2 Grid */}
@@ -110,7 +181,7 @@ export default function Page() {
                   Farm
                 </h3>
                 <div className="space-y-2">
-                  <Input placeholder="Farm name" className="text-sm" />
+                  <Input id="farm-name" placeholder="Farm name" className="text-sm" value={farmInput} onChange={(e) => setFarmInput(e.target.value)}/>
                 </div>
               </div>
 
@@ -121,46 +192,20 @@ export default function Page() {
                   Store
                 </h3>
                 <div className="space-y-2">
-                  <Input placeholder="Store name" className="text-sm" />
-                </div>
-              </div>
-
-              {/* Distribution Box */}
-              <div className="border border-[#78D025]/30 rounded-lg p-4 bg-white/50">
-                <h3 className="font-semibold mb-2 flex items-center gap-2 text-[#78D025]">
-                  <Icon icon="mdi:truck-delivery" className="w-5 h-5" />
-                  Distribution
-                </h3>
-                <div className="space-y-2">
-                  <Input placeholder="Carrier name" className="text-sm" />
-                </div>
-              </div>
-
-              {/* Warehouse Box */}
-              <div className="border border-[#78D025]/30 rounded-lg p-4 bg-white/50">
-                <h3 className="font-semibold mb-2 flex items-center gap-2 text-[#78D025]">
-                  <Icon icon="mdi:warehouse" className="w-5 h-5" />
-                  Warehouse
-                </h3>
-                <div className="space-y-2">
-                  <Input placeholder="Warehouse name" className="text-sm" />
+                  <Input id="store-name" placeholder="Store name" className="text-sm" value={storeInput} onChange={(e) => setStoreInput(e.target.value)}/>
                 </div>
               </div>
             </div>
 
             {/* Add Stock Button */}
-            <div className="flex justify-end mb-6">
-              <Button variant="outline" className="flex items-center gap-2">
+            <div className="flex justify-end mb-6 gap-4">
+              {produceMsg && <span className="text-[#78D025] ml-auto">{produceMsg}</span>}
+              <Button variant="outline" className="flex items-center gap-2" onClick={onProduceAdd}>
                 <Icon icon="mdi:plus" className="w-5 h-5" />
                 Add Stock
               </Button>
             </div>
           </div>
-        </div>
-
-        {/* Submit Button */}
-        <div className="flex justify-end mt-6">
-          <Button className="px-8">Submit</Button>
         </div>
       </div>
     </div>
