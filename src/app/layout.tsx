@@ -3,8 +3,8 @@ import "./globals.css";
 import NavBar from "@/components/NavBar";
 
 export const metadata: Metadata = {
-  title: "Ethical farmers",
-  description: "Ethical farming here",
+  title: "CropChain",
+  description: "Building a transparent future for agriculture where ethical farming practices are verified, valued, and rewarded.",
 };
 
 export default function RootLayout({
