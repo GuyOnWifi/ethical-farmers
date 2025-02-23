@@ -5,7 +5,14 @@ interface Company {
     rating: number;
 }
 
-const COMPANIES_LIST : { [key:string]: Company } = {
+interface Product {
+    id: number;
+    name: string;
+    price: number;
+    imageURL: string;
+}
+
+const COMPANIES_LIST: { [key: string]: Company } = {
     "costco": {
         imageURL: "/costco.svg",
         name: "Costco Wholesale",
@@ -44,4 +51,98 @@ const COMPANIES_LIST : { [key:string]: Company } = {
     },
 }
 
-export default COMPANIES_LIST;
+const PRODUCTS_LIST: Product[] = [
+    {
+        id: 0,
+        name: "Organic McIntosh Apples",
+        price: 4.99,
+        imageURL: "/products/apples.svg"
+    },
+    {
+        id: 1,
+        name: "Fair Trade Dark Roast Coffee",
+        price: 16.99,
+        imageURL: "/products/coffee.svg"
+    },
+    {
+        id: 2,
+        name: "Free Range Omega-3 Eggs",
+        price: 7.99,
+        imageURL: "/products/eggs.svg"
+    },
+    {
+        id: 3,
+        name: "Organic Red Spring Wheat Flour",
+        price: 8.99,
+        imageURL: "/products/flour.svg"
+    },
+    {
+        id: 4,
+        name: "Sustainable Atlantic Salmon",
+        price: 24.99,
+        imageURL: "/products/salmon.svg"
+    },
+    {
+        id: 5,
+        name: "Organic Canadian Maple Syrup",
+        price: 19.99,
+        imageURL: "/products/maple-syrup.svg"
+    },
+    {
+        id: 6,
+        name: "Fair Trade Chocolate Bars",
+        price: 5.99,
+        imageURL: "/products/chocolate.svg"
+    },
+    {
+        id: 7,
+        name: "Organic Canadian Wild Blueberries",
+        price: 6.99,
+        imageURL: "/products/blueberries.svg"
+    },
+    {
+        id: 8,
+        name: "Grass-Fed Beef",
+        price: 29.99,
+        imageURL: "/products/beef.svg"
+    },
+    {
+        id: 9,
+        name: "Organic Red Lentils",
+        price: 5.99,
+        imageURL: "/products/lentils.svg"
+    },
+    {
+        id: 10,
+        name: "Sustainable Canola Oil",
+        price: 9.99,
+        imageURL: "/products/canola-oil.svg"
+    },
+    {
+        id: 11,
+        name: "Organic Steel Cut Oats",
+        price: 7.99,
+        imageURL: "/products/oats.svg"
+    },
+    {
+        id: 12,
+        name: "Fair Trade Green Tea",
+        price: 6.99,
+        imageURL: "/products/green-tea.svg"
+    },
+    {
+        id: 13,
+        name: "Organic Hemp Seeds",
+        price: 12.99,
+        imageURL: "/products/hemp-seeds.svg"
+    },
+    {
+        id: 14,
+        name: "Sustainable Rainbow Trout",
+        price: 22.99,
+        imageURL: "/products/trout.svg"
+    }
+];
+
+export { COMPANIES_LIST, PRODUCTS_LIST };
+export type { Company, Product };

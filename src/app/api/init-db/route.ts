@@ -2,21 +2,21 @@ import { transaction_database } from "@/declarations/transaction_database";
 
 // Products with real Canadian sustainable/organic products
 const PRODUCTS = [
-    { id: 1, name: "Organic McIntosh Apples" },
-    { id: 2, name: "Fair Trade Dark Roast Coffee" },
-    { id: 3, name: "Free Range Omega-3 Eggs" },
-    { id: 4, name: "Organic Red Spring Wheat Flour" },
-    { id: 5, name: "Sustainable Atlantic Salmon" },
-    { id: 6, name: "Organic Canadian Maple Syrup" },
-    { id: 7, name: "Fair Trade Chocolate Bars" },
-    { id: 8, name: "Organic Canadian Wild Blueberries" },
-    { id: 9, name: "Grass-Fed Beef" },
-    { id: 10, name: "Organic Red Lentils" },
-    { id: 11, name: "Sustainable Canola Oil" },
-    { id: 12, name: "Organic Steel Cut Oats" },
-    { id: 13, name: "Fair Trade Green Tea" },
-    { id: 14, name: "Organic Hemp Seeds" },
-    { id: 15, name: "Sustainable Rainbow Trout" }
+    { id: 0, name: "Organic McIntosh Apples" },
+    { id: 1, name: "Fair Trade Dark Roast Coffee" },
+    { id: 2, name: "Free Range Omega-3 Eggs" },
+    { id: 3, name: "Organic Red Spring Wheat Flour" },
+    { id: 4, name: "Sustainable Atlantic Salmon" },
+    { id: 5, name: "Organic Canadian Maple Syrup" },
+    { id: 6, name: "Fair Trade Chocolate Bars" },
+    { id: 7, name: "Organic Canadian Wild Blueberries" },
+    { id: 8, name: "Grass-Fed Beef" },
+    { id: 9, name: "Organic Red Lentils" },
+    { id: 10, name: "Sustainable Canola Oil" },
+    { id: 11, name: "Organic Steel Cut Oats" },
+    { id: 12, name: "Fair Trade Green Tea" },
+    { id: 13, name: "Organic Hemp Seeds" },
+    { id: 14, name: "Sustainable Rainbow Trout" }
 ];
 
 // Major Canadian suppliers/producers
