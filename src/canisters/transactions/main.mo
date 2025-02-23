@@ -87,4 +87,9 @@ actor transactionDB {
     public shared query func getAllSuppliers() : async [Supplier] {
         return suppliers;
     };
+
+    public shared func resetCanister() : async () {
+        products := [];
+        suppliers := [];
+    }
 };

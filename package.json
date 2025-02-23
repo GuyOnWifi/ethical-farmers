@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@dfinity/agent": "^2.3.0",
+    "@dfinity/auth-client": "^2.3.0",
+    "@dfinity/principal": "^2.3.0",
     "@iconify/react": "^5.2.0",
     "clsx": "^2.1.1",
     "cobe": "^0.6.3",
