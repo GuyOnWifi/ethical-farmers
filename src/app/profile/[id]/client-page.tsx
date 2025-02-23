@@ -13,6 +13,7 @@ import { transaction_database } from "@/declarations/transaction_database";
 interface Product {
   imageUrl: string;
   title: string;
+  id: number;
   price: string;
 }
 
@@ -98,10 +99,10 @@ const productData = [
 ];
 
 export default function ClientPage({ company, id }: ClientPageProps) {
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [products, setProducts] = useState<any>([]);
-  const [transactionHistory, setTransactionHistory] = useState([]);
+  const [transactionHistory, setTransactionHistory] = useState<any>([]);
   
   // Add refs for animated beam nodes
   const containerRef = useRef<HTMLDivElement>(null);
@@ -110,14 +111,17 @@ export default function ClientPage({ company, id }: ClientPageProps) {
   const node3Ref = useRef<HTMLDivElement>(null);
   const node4Ref = useRef<HTMLDivElement>(null);
 
-  const handleProductClick = (product: Product) => {
-    setSelectedProduct(product);
+  const handleProductClick = async (id: number) => {
+    setSelectedProduct(id);
     setIsModalOpen(true);
+    const hist = await transaction_database.getHistory(BigInt(id))
+    setTransactionHistory(hist);
+    console.log(hist);
   };
 
   transaction_database.getSupplier(id).then(sup => {
     if (sup[0]) {
-      setProducts(sup[0].products);
+      setProducts(sup[0]);
     }
   });
   
@@ -153,7 +157,7 @@ export default function ClientPage({ company, id }: ClientPageProps) {
               <div
                 key={index}
                 className="flex justify-center"
-                onClick={() => handleProductClick(productData[product])}
+                onClick={() => handleProductClick(product)}
               >
                 <DirectionAwareHover
                   imageUrl={productData[product].imageUrl}
@@ -183,15 +187,15 @@ export default function ClientPage({ company, id }: ClientPageProps) {
               <div className="flex flex-col items-center gap-4">
                 <div className="relative w-full h-[300px]">
                   <Image
-                    src={selectedProduct.imageUrl}
-                    alt={selectedProduct.title}
+                    src={productData[selectedProduct].imageUrl}
+                    alt={productData[selectedProduct].title}
                     fill
                     className="rounded-lg object-cover"
                   />
                 </div>
                 <div className="text-center">
-                  <h2 className="text-xl font-bold mb-1 text-black">{selectedProduct.title}</h2>
-                  <p className="text-lg text-gray-700">{selectedProduct.price}</p>
+                  <h2 className="text-xl font-bold mb-1 text-black">{productData[selectedProduct].title}</h2>
+                  <p className="text-lg text-gray-700">{productData[selectedProduct].price}</p>
                 </div>
 
                 {/* Verification Flow with Animated Beams */}

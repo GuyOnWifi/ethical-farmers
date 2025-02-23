@@ -16,12 +16,12 @@ export type Time = bigint;
 export interface Transaction {
   'date' : Time,
   'productId' : bigint,
-  'seller' : Supplier,
-  'buyer' : Supplier,
+  'seller' : string,
+  'buyer' : string,
   'location' : string,
 }
 export interface _SERVICE {
-  'addProduct' : ActorMethod<[bigint, string], undefined>,
+  'addProduct' : ActorMethod<[bigint, string, string], undefined>,
   'addSupplier' : ActorMethod<[Supplier], undefined>,
   'addTransaction' : ActorMethod<[Transaction], undefined>,
   'getAllSuppliers' : ActorMethod<[], Array<Supplier>>,

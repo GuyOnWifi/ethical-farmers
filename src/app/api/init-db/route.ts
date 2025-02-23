@@ -22,60 +22,70 @@ const PRODUCTS = [
 // Major Canadian suppliers/producers
 const SUPPLIERS = [
     {
+        id: "naturespathfoods",
         name: "Nature's Path Foods",
         location: "Richmond, BC",
         products: [4, 12, 14],  // Flour, oats, hemp
         certified_date: BigInt(Date.UTC(2020, 1, 15))
     },
     {
+        id: "ethicalbeancoffee",
         name: "Ethical Bean Coffee",
         location: "Vancouver, BC",
         products: [2],  // Coffee
         certified_date: BigInt(Date.UTC(2019, 6, 22))
     },
     {
+        id: "mapleleaforganicfarms",
         name: "Maple Leaf Organic Farms",
         location: "Durham, ON",
         products: [1, 8],  // Apples, blueberries
         certified_date: BigInt(Date.UTC(2021, 3, 10))
     },
     {
+        id: "burnbraefarms",
         name: "Burnbrae Farms",
         location: "Lyn, ON",
         products: [3],  // Eggs
         certified_date: BigInt(Date.UTC(2018, 11, 5))
     },
     {
+        id: "truenorthsalmonco",
         name: "True North Salmon Co.",
         location: "Saint John, NB",
         products: [5, 15],  // Salmon, trout
         certified_date: BigInt(Date.UTC(2020, 8, 30))
     },
     {
+        id: "stlawrencedistillers",
         name: "St-Lawrence Distillers",
         location: "Quebec City, QC",
         products: [6],  // Maple syrup
         certified_date: BigInt(Date.UTC(2019, 2, 15))
     },
     {
+        id: "camino",
         name: "Camino",
         location: "Ottawa, ON",
         products: [7],  // Chocolate
         certified_date: BigInt(Date.UTC(2021, 5, 8))
     },
     {
+        id: "bluerangefarms",
         name: "Blue Range Farms",
         location: "Calgary, AB",
         products: [9],  // Beef
         certified_date: BigInt(Date.UTC(2020, 4, 12))
     },
     {
+        id: "agtfoodandingredients",
         name: "AGT Food and Ingredients",
         location: "Regina, SK",
         products: [10],  // Lentils
         certified_date: BigInt(Date.UTC(2019, 9, 25))
     },
     {
+        id: "richardsonoilseed",
         name: "Richardson Oilseed",
         location: "Winnipeg, MB",
         products: [11],  // Canola oil
@@ -86,41 +96,48 @@ const SUPPLIERS = [
 // Major Canadian retailers/distributors
 const BUYERS = [
     {
-        name: "Sobeys",
-        location: "Stellarton, NS",
-        certified_date: BigInt(Date.UTC(2019, 0, 1))
+        id: "costco",
+        name: "Costco",
+        location: "Ottawa, ON",
+        certified_date: BigInt(Date.UTC(2020, 7, 12)),
+        products: [0, 1, 2] // Assigned first 3 products
     },
     {
+        id: "loblaws",
         name: "Loblaws",
         location: "Brampton, ON",
-        certified_date: BigInt(Date.UTC(2018, 11, 15))
+        certified_date: BigInt(Date.UTC(2018, 11, 15)),
+        products: [3, 4, 5] // Assigned next 3 products
     },
     {
+        id: "walmart",
+        name: "Walmart",
+        location: "Toronto, ON",
+        certified_date: BigInt(Date.UTC(2019, 5, 10)),
+        products: [6, 7, 8] // Assigned next 3 products
+    },
+    {
+        id: "sobeys",
+        name: "Sobeys",
+        location: "Stellarton, NS",
+        certified_date: BigInt(Date.UTC(2019, 0, 1)),
+        products: [9, 10] // Assigned next 3 products
+    },
+    {
+        id: "freshco",
+        name: "FreshCo",
+        location: "Vancouver, BC",
+        certified_date: BigInt(Date.UTC(2018, 8, 5)),
+        products: [11, 12] // Assigned last 3 products
+    },
+    {
+        id: "metro",
         name: "Metro",
         location: "Montreal, QC",
-        certified_date: BigInt(Date.UTC(2020, 2, 20))
-    },
-    {
-        name: "Save-On-Foods",
-        location: "Langley, BC",
-        certified_date: BigInt(Date.UTC(2019, 5, 10))
-    },
-    {
-        name: "Whole Foods Market Canada",
-        location: "Vancouver, BC",
-        certified_date: BigInt(Date.UTC(2018, 8, 5))
-    },
-    {
-        name: "Farm Boy",
-        location: "Ottawa, ON",
-        certified_date: BigInt(Date.UTC(2020, 7, 12))
-    },
-    {
-        name: "Calgary Co-op",
-        location: "Calgary, AB",
-        certified_date: BigInt(Date.UTC(2019, 4, 30))
+        certified_date: BigInt(Date.UTC(2020, 2, 20)),
+        products: [13, 14] // No products left to assign
     }
-];
+]
 
 // Canadian locations for transactions
 const LOCATIONS = [
@@ -152,14 +169,23 @@ export async function GET() {
         for (const supplier of SUPPLIERS) {
             await transaction_database.addSupplier({
                 certified_date: supplier.certified_date,
-                name: supplier.name,
+                name: supplier.id,
                 products: supplier.products.map(id => BigInt(id))
             });
-        }
+        } 
         console.log("Suppliers added");
 
+        // Add all suppliers
+        for (const buyer of BUYERS) {
+            await transaction_database.addSupplier({
+                certified_date: buyer.certified_date,
+                name: buyer.id,
+                products: buyer.products.map(id => BigInt(id))
+            });
+        } 
+        console.log("Buyers added");
 
-        // Generate 10 transactions over the past 2 years
+        // Generate 20 transactions over the past 2 years
         const startDate = new Date(2023, 0, 1).getTime();
         const endDate = new Date().getTime();
 
@@ -201,7 +227,7 @@ export async function GET() {
         }
         console.log("Transactions added");
 
-        return new Response("Database populated with 10 transactions", { status: 200 });
+        return new Response("Database populated with 20 transactions", { status: 200 });
     } catch (error: unknown) {
         console.error("Error populating database:", error);
         const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
