@@ -138,10 +138,15 @@ const LOCATIONS = [
 
 export async function GET() {
     try {
+
+        await transaction_database.resetCanister();
+        console.log("Canister reset");
+
         // Add all products
         for (const product of PRODUCTS) {
             await transaction_database.addProduct(BigInt(product.id), product.name);
         }
+        console.log("Products added");
 
         // Add all suppliers
         for (const supplier of SUPPLIERS) {
@@ -151,15 +156,17 @@ export async function GET() {
                 products: supplier.products.map(id => BigInt(id))
             });
         }
+        console.log("Suppliers added");
 
-        // Generate 500 transactions over the past 2 years
+
+        // Generate 10 transactions over the past 2 years
         const startDate = new Date(2023, 0, 1).getTime();
         const endDate = new Date().getTime();
 
-        for (let i = 0; i < 500; i++) {
+        for (let i = 0; i < 20; i++) {
             // Random date between start and end
             const transactionDate = BigInt(
-                startDate + Math.random() * (endDate - startDate)
+                Math.floor(startDate + Math.random() * (endDate - startDate))
             );
 
             // Random supplier
@@ -192,8 +199,9 @@ export async function GET() {
                 }
             });
         }
+        console.log("Transactions added");
 
-        return new Response("Database populated with 500 transactions", { status: 200 });
+        return new Response("Database populated with 10 transactions", { status: 200 });
     } catch (error: unknown) {
         console.error("Error populating database:", error);
         const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
