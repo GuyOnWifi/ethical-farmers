@@ -50,47 +50,78 @@ const COMPANIES_LIST: { [key: string]: Company } = {
         rating: 4.5,
     },
 }
+
 // Major Canadian suppliers/producers
-const SUPPLIERS_LIST: { [key: string]: { name: string, certified_date: bigint } } = {
+const SUPPLIERS_LIST: { [key: string]: Company & { certified_date: bigint } } = {
     "naturespathfoods": {
         name: "Nature's Path Foods",
-        certified_date: BigInt(Date.UTC(2020, 1, 15))
+        certified_date: BigInt(Date.UTC(2020, 1, 15)),
+        imageURL: "/suppliers/natures-path.svg",
+        certificates: 2,
+        rating: 4.5
     },
     "ethicalbeancoffee": {
         name: "Ethical Bean Coffee",
-        certified_date: BigInt(Date.UTC(2019, 6, 22))
+        certified_date: BigInt(Date.UTC(2019, 6, 22)),
+        imageURL: "/suppliers/ethical-bean.svg",
+        certificates: 2,
+        rating: 4.7
     },
     "mapleleaforganicfarms": {
         name: "Maple Leaf Organic Farms",
-        certified_date: BigInt(Date.UTC(2021, 3, 10))
+        certified_date: BigInt(Date.UTC(2021, 3, 10)),
+        imageURL: "/suppliers/maple-leaf.svg",
+        certificates: 2,
+        rating: 4.3
     },
     "burnbraefarms": {
         name: "Burnbrae Farms",
-        certified_date: BigInt(Date.UTC(2018, 11, 5))
+        certified_date: BigInt(Date.UTC(2018, 11, 5)),
+        imageURL: "/suppliers/burnbrae.svg",
+        certificates: 2,
+        rating: 4.6
     },
     "truenorthsalmonco": {
         name: "True North Salmon Co.",
-        certified_date: BigInt(Date.UTC(2020, 8, 30))
+        certified_date: BigInt(Date.UTC(2020, 8, 30)),
+        imageURL: "/suppliers/true-north.svg",
+        certificates: 2,
+        rating: 4.4
     },
     "stlawrencedistillers": {
         name: "St-Lawrence Distillers",
-        certified_date: BigInt(Date.UTC(2019, 2, 15))
+        certified_date: BigInt(Date.UTC(2019, 2, 15)),
+        imageURL: "/suppliers/st-lawrence.svg",
+        certificates: 2,
+        rating: 4.8
     },
     "camino": {
         name: "Camino",
-        certified_date: BigInt(Date.UTC(2021, 5, 8))
+        certified_date: BigInt(Date.UTC(2021, 5, 8)),
+        imageURL: "/suppliers/camino.svg",
+        certificates: 2,
+        rating: 4.6
     },
     "bluerangefarms": {
         name: "Blue Range Farms",
-        certified_date: BigInt(Date.UTC(2020, 4, 12))
+        certified_date: BigInt(Date.UTC(2020, 4, 12)),
+        imageURL: "/suppliers/blue-range.svg",
+        certificates: 2,
+        rating: 4.5
     },
     "agtfoodandingredients": {
         name: "AGT Food and Ingredients",
-        certified_date: BigInt(Date.UTC(2019, 9, 25))
+        certified_date: BigInt(Date.UTC(2019, 9, 25)),
+        imageURL: "/suppliers/agt.svg",
+        certificates: 2,
+        rating: 4.4
     },
     "richardsonoilseed": {
         name: "Richardson Oilseed",
-        certified_date: BigInt(Date.UTC(2021, 1, 18))
+        certified_date: BigInt(Date.UTC(2021, 1, 18)),
+        imageURL: "/suppliers/richardson.svg",
+        certificates: 2,
+        rating: 4.5
     }
 };
 
@@ -184,6 +215,72 @@ const PRODUCTS_LIST: Product[] = [
         name: "Sustainable Rainbow Trout",
         price: 22.99,
         imageURL: "/products/trout.svg"
+    },
+    {
+        id: 15,
+        name: "Organic Baby Spinach",
+        price: 5.99,
+        imageURL: "/products/spinach.svg"
+    },
+    {
+        id: 16,
+        name: "Organic Sweet Potatoes",
+        price: 3.99,
+        imageURL: "/products/sweet-potatoes.svg"
+    },
+    {
+        id: 17,
+        name: "Local Honey",
+        price: 12.99,
+        imageURL: "/products/honey.svg"
+    },
+    {
+        id: 18,
+        name: "Organic Quinoa",
+        price: 8.99,
+        imageURL: "/products/quinoa.svg"
+    },
+    {
+        id: 19,
+        name: "Wild Pacific Halibut",
+        price: 28.99,
+        imageURL: "/products/halibut.svg"
+    },
+    {
+        id: 20,
+        name: "Organic Chia Seeds",
+        price: 11.99,
+        imageURL: "/products/chia-seeds.svg"
+    },
+    {
+        id: 21,
+        name: "Fair Trade Cocoa Powder",
+        price: 9.99,
+        imageURL: "/products/cocoa.svg"
+    },
+    {
+        id: 22,
+        name: "Organic Wild Rice",
+        price: 13.99,
+        imageURL: "/products/wild-rice.svg"
+    },
+    {
+        id: 23,
+        name: "Free Range Turkey",
+        price: 32.99,
+        imageURL: "/products/turkey.svg"
+    },
+    {
+        id: 24,
+        name: "Organic Maple Granola",
+        price: 8.99,
+        imageURL: "/products/granola.svg"
+    },
+    {
+        id: 25,
+        name: "Sustainable Arctic Char",
+        price: 26.99,
+        imageURL: "/products/arctic-char.svg"
     }
 ];
 
