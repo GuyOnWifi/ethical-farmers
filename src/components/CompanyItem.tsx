@@ -15,7 +15,7 @@ interface ComponentProps {
 export default function CompanyItem(props: ComponentProps) {
     return (
         <>
-            <Link href={`/profile/${props.id}`} className="border-[#78D025] border-[1px] rounded-md backdrop-blur-md flex justify-center items-center w-1/4 grow p-3 py-5 gap-3 hover:brightness-95 hover:scale-105 ease-in duration-150 cursor-pointer ">
+            <Link href={`/profile/${props.id}`} className="border-[#78D025] border-[1px] rounded-md backdrop-blur-md flex justify-center items-center w-1/4 grow p-3 py-5 gap-3 hover:brightness-95 hover:scale-105 ease-in duration-150 cursor-pointer overflow-hidden">
                 <Image src={props.company.imageURL} alt={`${props.company.name} logo`} height={50} width={50} className="w-1/2" />
                 <div className="flex flex-col grow w-1/2">
                     <div className="flex items-center gap-2">
