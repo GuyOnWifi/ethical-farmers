@@ -55,15 +55,15 @@ const COMPANIES_LIST: { [key: string]: Company } = {
         certificates: 2,
         rating: 5,
     },
-    "sweet-a": {
-        imageURL: "/sweet-dreams.svg",
-        name: "Sweet Dreamsa Teashop",
+    "MyungGa": {
+        imageURL: "/MyungGa.svg",
+        name: "Myung Ga Korean Restaurant",
         certificates: 2,
         rating: 5,
     },
-    "sweet-b": {
-        imageURL: "/sweet-dreams.svg",
-        name: "Sweet Dreamws Teashop",
+    "Kens": {
+        imageURL: "/Kens.svg",
+        name: "Kens Sushi",
         certificates: 2,
         rating: 5,
     },

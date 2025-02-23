@@ -4,13 +4,28 @@ import { PRODUCTS_LIST, COMPANIES_LIST, SUPPLIERS_LIST } from "@/lib/data";
 const COMPANY_KV = Object.entries(COMPANIES_LIST);
 const SUPPLIERS_KV = Object.entries(SUPPLIERS_LIST);
 
-// Sweet Dreams specific products
+// Restaurant-specific products
 const SWEET_DREAMS_PRODUCTS = [
     BigInt(26), // Jasmine Tea
-    BigInt(27), // Jasmine Tea
-    BigInt(28), // Organic Mangoes
+    BigInt(27), // Organic Mangoes
     BigInt(12), // Green Tea
     BigInt(0)   // Organic Apples
+];
+
+const MYUNG_GA_PRODUCTS = [
+    BigInt(15), // Organic Baby Spinach
+    BigInt(2),  // Free Range Omega-3 Eggs
+    BigInt(8),  // Grass-Fed Beef
+    BigInt(22), // Organic Wild Rice
+    BigInt(4)   // Sustainable Atlantic Salmon
+];
+
+const KENS_PRODUCTS = [
+    BigInt(4),  // Sustainable Atlantic Salmon
+    BigInt(14), // Sustainable Rainbow Trout
+    BigInt(19), // Wild Pacific Halibut
+    BigInt(25), // Sustainable Arctic Char
+    BigInt(31)  // Sustainable Mussels
 ];
 
 // Canadian locations for transactions
@@ -27,6 +42,15 @@ const LOCATIONS = [
     "Victoria, BC"
 ];
 
+// Helper function to determine if a product belongs to a specific restaurant
+function getRestaurantForProduct(productId: number): string | null {
+    const id = BigInt(productId);
+    if (SWEET_DREAMS_PRODUCTS.includes(id)) return "sweet-dreams";
+    if (MYUNG_GA_PRODUCTS.includes(id)) return "MyungGa";
+    if (KENS_PRODUCTS.includes(id)) return "Kens";
+    return null;
+}
+
 export async function GET() {
     try {
         await transaction_database.resetCanister();
@@ -42,21 +66,37 @@ export async function GET() {
         }
         console.log("Suppliers added");
 
-        // Add all companies, with special handling for Sweet Dreams
+        // Add all companies, with special handling for restaurants
         for (const [id, data] of COMPANY_KV) {
+            let products: bigint[] = [];
+            
+            switch(id) {
+                case "sweet-dreams":
+                    products = SWEET_DREAMS_PRODUCTS;
+                    break;
+                case "MyungGa":
+                    products = MYUNG_GA_PRODUCTS;
+                    break;
+                case "Kens":
+                    products = KENS_PRODUCTS;
+                    break;
+                default:
+                    products = [];
+            }
+
             await transaction_database.addSupplier({
                 certified_date: BigInt(99999),
                 name: id,
-                products: id === "sweet-dreams" ? SWEET_DREAMS_PRODUCTS : []
+                products: products
             });
         }
-        console.log("Big companies added");
+        console.log("Companies and restaurants added");
 
         // Add transactions for all products
         for (const product of PRODUCTS_LIST) {
-            const buyer = product.id in SWEET_DREAMS_PRODUCTS 
-                ? "sweet-dreams" 
-                : COMPANY_KV[Math.floor(Math.random() * COMPANY_KV.length)][0];
+            const restaurantOwner = getRestaurantForProduct(product.id);
+            const buyer = restaurantOwner || 
+                COMPANY_KV[Math.floor(Math.random() * COMPANY_KV.length)][0];
 
             await transaction_database.addTransaction({
                 date: BigInt(99999),
@@ -67,7 +107,7 @@ export async function GET() {
                 buyer: buyer
             });
         }
-        console.log("Products added");
+        console.log("Products and transactions added");
 
         return new Response("Database populated with transactions", { status: 200 });
     } catch (error: unknown) {
