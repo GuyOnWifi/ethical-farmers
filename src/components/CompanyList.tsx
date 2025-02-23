@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 import SearchBar from "./SearchBar";
 import CompanyItem from "./CompanyItem";
-import COMPANIES_LIST from "@/lib/data";
+import { COMPANIES_LIST } from "@/lib/data";
 
 export default function CompanyList() {
     return (
