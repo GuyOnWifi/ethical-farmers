@@ -136,7 +136,7 @@ export default function ClientPage({ company, id }: ClientPageProps) {
               <Icon icon="carbon:close" className="w-5 h-5" />
             </button>
 
-            {selectedProduct && (
+            {(selectedProduct || selectedProduct === 0) && (
               <div className="flex flex-col items-center gap-4">
                 <div className="relative w-full h-[300px]">
                   <Image
