@@ -51,7 +51,7 @@ function getRestaurantForProduct(productId: number): string | null {
     return null;
 }
 
-export async function GET() {
+export default async function ResetPage() {
     try {
         await transaction_database.resetCanister();
         console.log("Canister reset");
@@ -93,10 +93,14 @@ export async function GET() {
         }
         console.log("Products and transactions added");
 
-        return new Response("Database populated with transactions", { status: 200 });
+        return (
+            <div>Succeeded!</div>
+        )
     } catch (error: unknown) {
         console.error("Error populating database:", error);
         const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-        return new Response(`Error populating database: ${errorMessage}`, { status: 500 });
+        return (
+            <div>No work sad</div>
+        )
     }
 }

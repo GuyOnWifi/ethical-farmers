@@ -10,7 +10,7 @@ export { idlFactory } from "./transaction_database.did.js";
  * beginning in dfx 0.15.0
  */
 export const canisterId =
-  "kpgse-bqaaa-aaaad-aakfq-cai";
+  "jctcd-uiaaa-aaaae-qcs4a-cai";
 
 let actorCache = null;
 
