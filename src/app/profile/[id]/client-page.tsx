@@ -7,6 +7,7 @@ import { DirectionAwareHover } from '../../../components/direction-aware-hover'
 import { useState, useRef, forwardRef, useEffect } from 'react';
 import { cn } from "@/lib/utils";
 import { AnimatedBeam } from "../../../components/animatedBeam";
+import { PRODUCTS_LIST, COMPANIES_LIST, SUPPLIERS_LIST } from "@/lib/data";
 
 import { transaction_database } from "@/declarations/transaction_database";
 
@@ -45,59 +46,6 @@ const VerificationNode = forwardRef<HTMLDivElement, {
 });
 VerificationNode.displayName = "VerificationNode";
 
-const productData = [
-  {
-    imageUrl: "/f3d5c85fa0426f90f400358a38d438ae 1.png",
-    title: "Organic Apples",
-    price: "$2.99 / lb"
-  },
-  {
-    imageUrl: "/api/placeholder/800/600",
-    title: "Fresh Tomatoes",
-    price: "$3.49 / lb"
-  },
-  {
-    imageUrl: "/api/placeholder/800/600",
-    title: "Green Lettuce",
-    price: "$1.99 / head"
-  },
-  {
-    imageUrl: "/api/placeholder/800/600",
-    title: "Sweet Carrots",
-    price: "$2.49 / lb"
-  },
-  {
-    imageUrl: "/api/placeholder/800/600",
-    title: "Red Peppers",
-    price: "$4.99 / lb"
-  },
-  {
-    imageUrl: "/api/placeholder/800/600",
-    title: "Fresh Cucumbers",
-    price: "$1.79 / each"
-  },
-  {
-    imageUrl: "/api/placeholder/800/600",
-    title: "Organic Potatoes",
-    price: "$5.99 / bag"
-  },
-  {
-    imageUrl: "/api/placeholder/800/600",
-    title: "Fresh Spinach",
-    price: "$3.99 / bunch"
-  },
-  {
-    imageUrl: "/api/placeholder/800/600",
-    title: "Sweet Corn",
-    price: "$0.99 / ear"
-  },
-  {
-    imageUrl: "/api/placeholder/800/600",
-    title: "Fresh Broccoli",
-    price: "$2.99 / head"
-  }
-];
-
 export default function ClientPage({ company, id }: ClientPageProps) {
   const [selectedProduct, setSelectedProduct] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -116,12 +64,11 @@ export default function ClientPage({ company, id }: ClientPageProps) {
     setIsModalOpen(true);
     const hist = await transaction_database.getHistory(BigInt(id))
     setTransactionHistory(hist);
-    console.log(hist);
   };
 
   transaction_database.getSupplier(id).then(sup => {
     if (sup[0]) {
-      setProducts(sup[0]);
+      setProducts(sup[0].products);
     }
   });
   
@@ -160,11 +107,11 @@ export default function ClientPage({ company, id }: ClientPageProps) {
                 onClick={() => handleProductClick(product)}
               >
                 <DirectionAwareHover
-                  imageUrl={productData[product].imageUrl}
+                  imageUrl={PRODUCTS_LIST[product].imageURL}
                   className="h-48 w-48 md:h-48 md:w-48 cursor-pointer"
                 >
-                  <p className="font-bold text-lg">{productData[product].title}</p>
-                  <p className="font-normal text-xs">{productData[product].price}</p>
+                  <p className="font-bold text-lg">{PRODUCTS_LIST[product].name}</p>
+                  <p className="font-normal text-xs">{PRODUCTS_LIST[product].price}</p>
                 </DirectionAwareHover>
               </div>
             ))}
@@ -187,15 +134,15 @@ export default function ClientPage({ company, id }: ClientPageProps) {
               <div className="flex flex-col items-center gap-4">
                 <div className="relative w-full h-[300px]">
                   <Image
-                    src={productData[selectedProduct].imageUrl}
-                    alt={productData[selectedProduct].title}
+                    src={PRODUCTS_LIST[selectedProduct].imageURL}
+                    alt={PRODUCTS_LIST[selectedProduct].name}
                     fill
                     className="rounded-lg object-cover"
                   />
                 </div>
                 <div className="text-center">
-                  <h2 className="text-xl font-bold mb-1 text-black">{productData[selectedProduct].title}</h2>
-                  <p className="text-lg text-gray-700">{productData[selectedProduct].price}</p>
+                  <h2 className="text-xl font-bold mb-1 text-black">{PRODUCTS_LIST[selectedProduct].name}</h2>
+                  <p className="text-lg text-gray-700">{PRODUCTS_LIST[selectedProduct].price}</p>
                 </div>
 
                 {/* Verification Flow with Animated Beams */}
@@ -235,10 +182,10 @@ export default function ClientPage({ company, id }: ClientPageProps) {
 
                 {/* Optional: Add labels below */}
                 <div className="flex w-full justify-between px-2 text-xs text-gray-600">
-                  <span className="font-bold">Farm</span>
+                  <span className="font-bold">{transactionHistory[0] ? SUPPLIERS_LIST[transactionHistory[0].seller].name : "Farm"}</span>
                   <span className="font-bold">Transport</span>
                   <span className="font-bold">Warehouse</span>
-                  <span className="font-bold">Store</span>
+                  <span className="font-bold">{transactionHistory[0] ? COMPANIES_LIST[transactionHistory[0].buyer].name : "Store"}</span>
                 </div>
                 
                 <div className="flex gap-2 mt-2">

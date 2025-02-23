@@ -10,10 +10,14 @@ export { idlFactory } from "./transaction_database.did.js";
  * beginning in dfx 0.15.0
  */
 export const canisterId =
-  process.env.CANISTER_ID_TRANSACTION_DATABASE;
+  "be2us-64aaa-aaaaa-qaabq-cai";
+
+let actorCache = null;
 
 export const createActor = (canisterId, options = {}) => {
-  const agent = options.agent || new HttpAgent({ ...options.agentOptions });
+  if (actorCache) return actorCache;
+
+  const agent = options.agent || new HttpAgent({ ...options.agentOptions, host: "http://localhost:4943/" });
 
   if (options.agent && options.agentOptions) {
     console.warn(
@@ -32,11 +36,12 @@ export const createActor = (canisterId, options = {}) => {
   }
 
   // Creates an actor with using the candid interface and the HttpAgent
-  return Actor.createActor(idlFactory, {
+  actorCache = Actor.createActor(idlFactory, {
     agent,
     canisterId,
     ...options.actorOptions,
   });
+  return actorCache;
 };
 
 export const transaction_database = canisterId ? createActor(canisterId) : undefined;

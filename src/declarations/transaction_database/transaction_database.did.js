@@ -8,6 +8,7 @@ export const idlFactory = ({ IDL }) => {
   const Transaction = IDL.Record({
     'date' : Time,
     'productId' : IDL.Nat,
+    'productName' : IDL.Text,
     'seller' : IDL.Text,
     'buyer' : IDL.Text,
     'location' : IDL.Text,

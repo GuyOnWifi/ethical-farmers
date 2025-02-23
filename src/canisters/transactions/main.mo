@@ -16,6 +16,7 @@ actor transactionDB {
     type Transaction = {
         date : Time.Time;
         productId : Nat;
+        productName: Text;
         location : Text;
         seller : Text;
         buyer : Text;
@@ -88,6 +89,19 @@ actor transactionDB {
 
     // Function to add a transaction to a specific product by ID
     public shared func addTransaction(t : Transaction) : async () {
+
+        // Check if the product is even there
+        var exists : Bool = false;
+        for (prod in products.vals()) {
+            if (prod.id == t.productId) {
+                exists := true;
+            };
+        };
+
+        if (not exists) {
+            await addProduct(t.productId, t.productName, t.seller);
+        };
+
         let updatedProducts = Array.map<Product, Product>(
             products,
             func(p) {

@@ -16,6 +16,7 @@ export type Time = bigint;
 export interface Transaction {
   'date' : Time,
   'productId' : bigint,
+  'productName' : string,
   'seller' : string,
   'buyer' : string,
   'location' : string,

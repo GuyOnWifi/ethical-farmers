@@ -4,6 +4,7 @@ type Transaction =
    date: Time;
    location: text;
    productId: nat;
+   productName: text;
    seller: text;
  };
 type Time = int;
