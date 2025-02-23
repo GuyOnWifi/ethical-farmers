@@ -67,11 +67,14 @@ export default function ClientPage({ company, id }: ClientPageProps) {
     setTransactionHistory(hist);
   };
 
-  transaction_database.getSupplier(id).then(sup => {
-    if (sup[0]) {
-      setProducts(sup[0].products);
-    }
-  });
+  useEffect(() => {
+    transaction_database.getSupplier(id).then(sup => {
+      if (sup[0]) {
+        setProducts(sup[0].products);
+      }
+    });
+  }, [])
+
   
   return (
     <>

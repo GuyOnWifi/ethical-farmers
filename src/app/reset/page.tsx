@@ -1,5 +1,8 @@
+"use client";
+
 import { transaction_database } from "@/declarations/transaction_database";
 import { PRODUCTS_LIST, COMPANIES_LIST, SUPPLIERS_LIST } from "@/lib/data";
+import { useEffect } from "react";
 
 const COMPANY_KV = Object.entries(COMPANIES_LIST);
 const SUPPLIERS_KV = Object.entries(SUPPLIERS_LIST);
@@ -51,8 +54,7 @@ function getRestaurantForProduct(productId: number): string | null {
     return null;
 }
 
-export default async function ResetPage() {
-    console.log("Trying to reset!");
+async function reset() {
     try {
         await transaction_database.resetCanister();
         console.log("Canister reset");
@@ -68,7 +70,7 @@ export default async function ResetPage() {
         console.log("Suppliers added");
 
         // Add all companies, with special handling for restaurants
-        for (const [id, data] of COMPANY_KV) {          
+        for (const [id, data] of COMPANY_KV) {
             await transaction_database.addSupplier({
                 certified_date: BigInt(99999),
                 name: id,
@@ -80,7 +82,7 @@ export default async function ResetPage() {
         // Add transactions for all products
         for (const product of PRODUCTS_LIST) {
             const restaurantOwner = getRestaurantForProduct(product.id);
-            const buyer = restaurantOwner || 
+            const buyer = restaurantOwner ||
                 COMPANY_KV[Math.floor(Math.random() * COMPANY_KV.length)][0];
 
             await transaction_database.addTransaction({
@@ -93,15 +95,19 @@ export default async function ResetPage() {
             });
         }
         console.log("Products and transactions added");
-
-        return (
-            <div>Succeeded!</div>
-        )
     } catch (error: unknown) {
         console.error("Error populating database:", error);
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-        return (
-            <div>No work sad</div>
-        )
     }
+}
+
+export default function ResetPage() {
+    console.log("Trying to reset!");
+
+    useEffect(() => {
+        reset();
+    }, [])
+
+    return (
+        <div>Trying to reset!</div>
+    )
 }
