@@ -10,6 +10,7 @@ import { AnimatedBeam } from "../../../components/animatedBeam";
 import { PRODUCTS_LIST, COMPANIES_LIST, SUPPLIERS_LIST } from "@/lib/data";
 
 import { transaction_database } from "@/declarations/transaction_database";
+import { Transaction } from "@/declarations/transaction_database/transaction_database.did";
 
 interface Product {
   imageUrl: string;
@@ -49,8 +50,8 @@ VerificationNode.displayName = "VerificationNode";
 export default function ClientPage({ company, id }: ClientPageProps) {
   const [selectedProduct, setSelectedProduct] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [products, setProducts] = useState<any>([]);
-  const [transactionHistory, setTransactionHistory] = useState<any>([]);
+  const [products, setProducts] = useState<bigint[]>([]);
+  const [transactionHistory, setTransactionHistory] = useState<Transaction[]>([]);
   
   // Add refs for animated beam nodes
   const containerRef = useRef<HTMLDivElement>(null);
