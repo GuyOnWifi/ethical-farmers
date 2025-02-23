@@ -1,4 +1,7 @@
 {
+  "frontend": {
+    "ic": "jfsex-zqaaa-aaaae-qcs4q-cai"
+  },
   "transaction_database": {
     "ic": "jctcd-uiaaa-aaaae-qcs4a-cai"
   }

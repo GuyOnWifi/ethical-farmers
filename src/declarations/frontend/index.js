@@ -1,8 +1,8 @@
 import { Actor, HttpAgent } from "@dfinity/agent";
 
 // Imports and re-exports candid interface
-import { idlFactory } from "./transaction_database.did.js";
-export { idlFactory } from "./transaction_database.did.js";
+import { idlFactory } from "./frontend.did.js";
+export { idlFactory } from "./frontend.did.js";
 
 /* CANISTER_ID is replaced by webpack based on node environment
  * Note: canister environment variable will be standardized as
@@ -10,10 +10,10 @@ export { idlFactory } from "./transaction_database.did.js";
  * beginning in dfx 0.15.0
  */
 export const canisterId =
-  "jctcd-uiaaa-aaaae-qcs4a-cai";
+  process.env.CANISTER_ID_FRONTEND;
 
 export const createActor = (canisterId, options = {}) => {
-  const agent = options.agent || new HttpAgent({ ...options.agentOptions, host: "https://a4gq6-oaaaa-aaaab-qaa4q-cai.raw.icp0.io/" });
+  const agent = options.agent || new HttpAgent({ ...options.agentOptions });
 
   if (options.agent && options.agentOptions) {
     console.warn(
@@ -22,8 +22,7 @@ export const createActor = (canisterId, options = {}) => {
   }
 
   // Fetch root key for certificate validation during development
-  const dev = false;
-  if (dev) {
+  if (process.env.DFX_NETWORK !== "ic") {
     agent.fetchRootKey().catch((err) => {
       console.warn(
         "Unable to fetch root key. Check to ensure that your local replica is running"
@@ -40,4 +39,4 @@ export const createActor = (canisterId, options = {}) => {
   });
 };
 
-export const transaction_database = canisterId ? createActor(canisterId) : undefined;
+export const frontend = canisterId ? createActor(canisterId) : undefined;
