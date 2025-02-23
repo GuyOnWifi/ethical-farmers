@@ -144,7 +144,7 @@ export default function Page() {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-[#78D025] mb-1">Name</label>
-                <Input id="name" placeholder="Enter name" value={farmInput} onChange={(e) => setFarmInput(e.target.value)} />
+                <Input id="name" placeholder="Enter name" value={nameInput} onChange={(e) => setNameInput(e.target.value)} />
               </div>
               <div>
                 <label className="block text-sm font-medium text-[#78D025] mb-1">Certifications</label>
