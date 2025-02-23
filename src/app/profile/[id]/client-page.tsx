@@ -68,8 +68,10 @@ export default function ClientPage({ company, id }: ClientPageProps) {
   };
 
   useEffect(() => {
+    console.log("Fetching suppliers")
     transaction_database.getSupplier(id).then(sup => {
       if (sup[0]) {
+        console.log(sup[0]);
         setProducts(sup[0].products);
       }
     });
