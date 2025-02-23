@@ -52,6 +52,7 @@ function getRestaurantForProduct(productId: number): string | null {
 }
 
 export default async function ResetPage() {
+    console.log("Trying to reset!");
     try {
         await transaction_database.resetCanister();
         console.log("Canister reset");
