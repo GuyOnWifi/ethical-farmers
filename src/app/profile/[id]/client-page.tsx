@@ -4,9 +4,11 @@ import Image from "next/image";
 import { Icon } from "@iconify/react";
 import SearchBar from '../../../components/SearchBar'
 import { DirectionAwareHover } from '../../../components/direction-aware-hover'
-import { useState, useRef, forwardRef } from 'react';
+import { useState, useRef, forwardRef, useEffect } from 'react';
 import { cn } from "@/lib/utils";
 import { AnimatedBeam } from "../../../components/animatedBeam";
+
+import { transaction_database } from "@/declarations/transaction_database";
 
 interface Product {
   imageUrl: string;
@@ -21,6 +23,7 @@ interface Company {
 
 interface ClientPageProps {
   company: Company;
+  id: string;
 }
 
 const VerificationNode = forwardRef<HTMLDivElement, {
@@ -41,9 +44,64 @@ const VerificationNode = forwardRef<HTMLDivElement, {
 });
 VerificationNode.displayName = "VerificationNode";
 
-export default function ClientPage({ company }: ClientPageProps) {
+const productData = [
+  {
+    imageUrl: "/f3d5c85fa0426f90f400358a38d438ae 1.png",
+    title: "Organic Apples",
+    price: "$2.99 / lb"
+  },
+  {
+    imageUrl: "/api/placeholder/800/600",
+    title: "Fresh Tomatoes",
+    price: "$3.49 / lb"
+  },
+  {
+    imageUrl: "/api/placeholder/800/600",
+    title: "Green Lettuce",
+    price: "$1.99 / head"
+  },
+  {
+    imageUrl: "/api/placeholder/800/600",
+    title: "Sweet Carrots",
+    price: "$2.49 / lb"
+  },
+  {
+    imageUrl: "/api/placeholder/800/600",
+    title: "Red Peppers",
+    price: "$4.99 / lb"
+  },
+  {
+    imageUrl: "/api/placeholder/800/600",
+    title: "Fresh Cucumbers",
+    price: "$1.79 / each"
+  },
+  {
+    imageUrl: "/api/placeholder/800/600",
+    title: "Organic Potatoes",
+    price: "$5.99 / bag"
+  },
+  {
+    imageUrl: "/api/placeholder/800/600",
+    title: "Fresh Spinach",
+    price: "$3.99 / bunch"
+  },
+  {
+    imageUrl: "/api/placeholder/800/600",
+    title: "Sweet Corn",
+    price: "$0.99 / ear"
+  },
+  {
+    imageUrl: "/api/placeholder/800/600",
+    title: "Fresh Broccoli",
+    price: "$2.99 / head"
+  }
+];
+
+export default function ClientPage({ company, id }: ClientPageProps) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [products, setProducts] = useState<any>([]);
+  const [transactionHistory, setTransactionHistory] = useState([]);
   
   // Add refs for animated beam nodes
   const containerRef = useRef<HTMLDivElement>(null);
@@ -57,59 +115,12 @@ export default function ClientPage({ company }: ClientPageProps) {
     setIsModalOpen(true);
   };
 
-  const products = [
-    {
-      imageUrl: "/f3d5c85fa0426f90f400358a38d438ae 1.png",
-      title: "Organic Apples",
-      price: "$2.99 / lb"
-    },
-    {
-      imageUrl: "/api/placeholder/800/600",
-      title: "Fresh Tomatoes",
-      price: "$3.49 / lb"
-    },
-    {
-      imageUrl: "/api/placeholder/800/600",
-      title: "Green Lettuce",
-      price: "$1.99 / head"
-    },
-    {
-      imageUrl: "/api/placeholder/800/600",
-      title: "Sweet Carrots",
-      price: "$2.49 / lb"
-    },
-    {
-      imageUrl: "/api/placeholder/800/600",
-      title: "Red Peppers",
-      price: "$4.99 / lb"
-    },
-    {
-      imageUrl: "/api/placeholder/800/600",
-      title: "Fresh Cucumbers",
-      price: "$1.79 / each"
-    },
-    {
-      imageUrl: "/api/placeholder/800/600",
-      title: "Organic Potatoes",
-      price: "$5.99 / bag"
-    },
-    {
-      imageUrl: "/api/placeholder/800/600",
-      title: "Fresh Spinach",
-      price: "$3.99 / bunch"
-    },
-    {
-      imageUrl: "/api/placeholder/800/600",
-      title: "Sweet Corn",
-      price: "$0.99 / ear"
-    },
-    {
-      imageUrl: "/api/placeholder/800/600",
-      title: "Fresh Broccoli",
-      price: "$2.99 / head"
+  transaction_database.getSupplier(id).then(sup => {
+    if (sup[0]) {
+      setProducts(sup[0].products);
     }
-  ];
-
+  });
+  
   return (
     <>
       <div className="flex flex-col items-center text-black">
@@ -138,18 +149,18 @@ export default function ClientPage({ company }: ClientPageProps) {
 
         <div className="w-full mt-8 px-8">
           <div className="grid grid-cols-5 gap-8">
-            {products.map((product, index) => (
+            {products.map((product: number, index: number) => (
               <div
                 key={index}
                 className="flex justify-center"
-                onClick={() => handleProductClick(product)}
+                onClick={() => handleProductClick(productData[product])}
               >
                 <DirectionAwareHover
-                  imageUrl={product.imageUrl}
+                  imageUrl={productData[product].imageUrl}
                   className="h-48 w-48 md:h-48 md:w-48 cursor-pointer"
                 >
-                  <p className="font-bold text-lg">{product.title}</p>
-                  <p className="font-normal text-xs">{product.price}</p>
+                  <p className="font-bold text-lg">{productData[product].title}</p>
+                  <p className="font-normal text-xs">{productData[product].price}</p>
                 </DirectionAwareHover>
               </div>
             ))}

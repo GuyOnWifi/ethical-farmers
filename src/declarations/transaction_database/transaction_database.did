@@ -27,4 +27,5 @@ service : {
   getHistory: (nat) -> (vec Transaction) query;
   getProducts: () -> (vec Product) query;
   getSupplier: (text) -> (opt Supplier) query;
+  resetCanister: () -> ();
 }

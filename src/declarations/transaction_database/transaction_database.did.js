@@ -25,6 +25,7 @@ export const idlFactory = ({ IDL }) => {
     'getHistory' : IDL.Func([IDL.Nat], [IDL.Vec(Transaction)], ['query']),
     'getProducts' : IDL.Func([], [IDL.Vec(Product)], ['query']),
     'getSupplier' : IDL.Func([IDL.Text], [IDL.Opt(Supplier)], ['query']),
+    'resetCanister' : IDL.Func([], [], []),
   });
 };
 export const init = ({ IDL }) => { return []; };

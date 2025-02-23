@@ -6,7 +6,6 @@ import { transaction_database } from "@/declarations/transaction_database";
 export default function Home() {
   
   console.log(transaction_database);
-
   
   transaction_database.addSupplier({
     "certified_date": BigInt(12345),

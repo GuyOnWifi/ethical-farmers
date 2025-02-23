@@ -28,6 +28,7 @@ export interface _SERVICE {
   'getHistory' : ActorMethod<[bigint], Array<Transaction>>,
   'getProducts' : ActorMethod<[], Array<Product>>,
   'getSupplier' : ActorMethod<[string], [] | [Supplier]>,
+  'resetCanister' : ActorMethod<[], undefined>,
 }
 export declare const idlFactory: IDL.InterfaceFactory;
 export declare const init: (args: { IDL: typeof IDL }) => IDL.Type[];

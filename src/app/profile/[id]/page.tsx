@@ -2,10 +2,12 @@
 import COMPANIES_LIST from "@/lib/data"
 import ClientPage from './client-page';
 
-export default function Page({ params }: { params: { id: string } }) {
-  if (!(params.id in COMPANIES_LIST)) return "Nothing found :(";
+export default async function Page({ params }: { params: { id: string } }) {
+  const { id } = await params;
 
-  const company = COMPANIES_LIST[params.id];
+  if (!(id in COMPANIES_LIST)) return "Nothing found :(";
 
-  return <ClientPage company={company} />;
+  const company = COMPANIES_LIST[id];
+
+  return <ClientPage company={company} id={id} />;
 }
