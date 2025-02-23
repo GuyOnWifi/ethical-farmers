@@ -56,7 +56,7 @@ export async function GET() {
         }
         console.log("Products added");
 
-        return new Response("Database populated with 20 transactions", { status: 200 });
+        return new Response("Database populated with transactions", { status: 200 });
     } catch (error: unknown) {
         console.error("Error populating database:", error);
         const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
