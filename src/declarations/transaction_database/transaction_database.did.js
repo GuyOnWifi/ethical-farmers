@@ -8,8 +8,9 @@ export const idlFactory = ({ IDL }) => {
   const Transaction = IDL.Record({
     'date' : Time,
     'productId' : IDL.Nat,
-    'seller' : Supplier,
-    'buyer' : Supplier,
+    'productName' : IDL.Text,
+    'seller' : IDL.Text,
+    'buyer' : IDL.Text,
     'location' : IDL.Text,
   });
   const Product = IDL.Record({
@@ -18,7 +19,7 @@ export const idlFactory = ({ IDL }) => {
     'transHistory' : IDL.Vec(Transaction),
   });
   return IDL.Service({
-    'addProduct' : IDL.Func([IDL.Nat, IDL.Text], [], []),
+    'addProduct' : IDL.Func([IDL.Nat, IDL.Text, IDL.Text], [], []),
     'addSupplier' : IDL.Func([Supplier], [], []),
     'addTransaction' : IDL.Func([Transaction], [], []),
     'getAllSuppliers' : IDL.Func([], [IDL.Vec(Supplier)], ['query']),

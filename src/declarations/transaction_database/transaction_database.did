@@ -1,10 +1,11 @@
 type Transaction = 
  record {
-   buyer: Supplier;
+   buyer: text;
    date: Time;
    location: text;
    productId: nat;
-   seller: Supplier;
+   productName: text;
+   seller: text;
  };
 type Time = int;
 type Supplier = 
@@ -20,7 +21,7 @@ type Product =
    transHistory: vec Transaction;
  };
 service : {
-  addProduct: (nat, text) -> ();
+  addProduct: (nat, text, text) -> ();
   addSupplier: (Supplier) -> ();
   addTransaction: (Transaction) -> ();
   getAllSuppliers: () -> (vec Supplier) query;

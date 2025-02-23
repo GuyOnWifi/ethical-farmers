@@ -50,6 +50,49 @@ const COMPANIES_LIST: { [key: string]: Company } = {
         rating: 4.5,
     },
 }
+// Major Canadian suppliers/producers
+const SUPPLIERS_LIST: { [key: string]: { name: string, certified_date: bigint } } = {
+    "naturespathfoods": {
+        name: "Nature's Path Foods",
+        certified_date: BigInt(Date.UTC(2020, 1, 15))
+    },
+    "ethicalbeancoffee": {
+        name: "Ethical Bean Coffee",
+        certified_date: BigInt(Date.UTC(2019, 6, 22))
+    },
+    "mapleleaforganicfarms": {
+        name: "Maple Leaf Organic Farms",
+        certified_date: BigInt(Date.UTC(2021, 3, 10))
+    },
+    "burnbraefarms": {
+        name: "Burnbrae Farms",
+        certified_date: BigInt(Date.UTC(2018, 11, 5))
+    },
+    "truenorthsalmonco": {
+        name: "True North Salmon Co.",
+        certified_date: BigInt(Date.UTC(2020, 8, 30))
+    },
+    "stlawrencedistillers": {
+        name: "St-Lawrence Distillers",
+        certified_date: BigInt(Date.UTC(2019, 2, 15))
+    },
+    "camino": {
+        name: "Camino",
+        certified_date: BigInt(Date.UTC(2021, 5, 8))
+    },
+    "bluerangefarms": {
+        name: "Blue Range Farms",
+        certified_date: BigInt(Date.UTC(2020, 4, 12))
+    },
+    "agtfoodandingredients": {
+        name: "AGT Food and Ingredients",
+        certified_date: BigInt(Date.UTC(2019, 9, 25))
+    },
+    "richardsonoilseed": {
+        name: "Richardson Oilseed",
+        certified_date: BigInt(Date.UTC(2021, 1, 18))
+    }
+};
 
 const PRODUCTS_LIST: Product[] = [
     {
@@ -210,5 +253,5 @@ const PRODUCTS_LIST: Product[] = [
     }
 ];
 
-export { COMPANIES_LIST, PRODUCTS_LIST };
+export { COMPANIES_LIST, PRODUCTS_LIST, SUPPLIERS_LIST };
 export type { Company, Product };

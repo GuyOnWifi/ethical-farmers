@@ -9,16 +9,17 @@ actor transactionDB {
     type Supplier = {
         name : Text;
         certified_date : Time.Time;
-        products : [Nat];
+        products: [Nat];
     };
 
     // Define a transaction type
     type Transaction = {
         date : Time.Time;
         productId : Nat;
+        productName: Text;
         location : Text;
-        seller : Supplier;
-        buyer : Supplier;
+        seller : Text;
+        buyer : Text;
     };
 
     // Define a product type
@@ -33,28 +34,31 @@ actor transactionDB {
     private var suppliers : [Supplier] = [];
 
     // Function to add a new product
-    public shared func addProduct(id : Nat, name : Text) : async () {
+    public shared func addProduct(id : Nat, name : Text, companyName : Text) : async () {
         let newProduct : Product = { id = id; name = name; transHistory = [] };
         products := Array.append(products, [newProduct]);
-    };
 
-    // Function to add a transaction to a specific product by ID
-    public shared func addTransaction(t : Transaction) : async () {
-        let updatedProducts = Array.map<Product, Product>(
-            products,
-            func(p) {
-                if (p.id == t.productId) {
-                    {
-                        id = p.id;
-                        name = p.name;
-                        transHistory = Array.append(p.transHistory, [t]);
-                    };
+        // Add it to the company that carries it
+        let updatedSuppliers = Array.map<Supplier, Supplier>(
+            suppliers,
+            func(s) {
+                if (s.name == companyName) {
+                    return {
+                        name = s.name;
+                        certified_date = s.certified_date;
+                        products = Array.append(s.products, [id]);
+                    }
                 } else {
-                    p;
-                };
-            },
+                    return s;
+                }
+            }
         );
-        products := updatedProducts;
+        suppliers := updatedSuppliers;
+    };
+    
+    // Function to get all products
+    public shared query func getProducts() : async [Product] {
+        return products;
     };
 
     // Function to get the transaction history of a product by ID
@@ -65,11 +69,6 @@ actor transactionDB {
             };
         };
         return [];
-    };
-
-    // Function to get all products
-    public shared query func getProducts() : async [Product] {
-        return products;
     };
 
     // Add a supplier
@@ -86,6 +85,55 @@ actor transactionDB {
     // Get all suppliers
     public shared query func getAllSuppliers() : async [Supplier] {
         return suppliers;
+    };
+
+    // Function to add a transaction to a specific product by ID
+    public shared func addTransaction(t : Transaction) : async () {
+
+        // Check if the product is even there
+        var exists : Bool = false;
+        for (prod in products.vals()) {
+            if (prod.id == t.productId) {
+                exists := true;
+            };
+        };
+
+        if (not exists) {
+            await addProduct(t.productId, t.productName, t.seller);
+        };
+
+        let updatedProducts = Array.map<Product, Product>(
+            products,
+            func(p) {
+                if (p.id == t.productId) {
+                    {
+                        id = p.id;
+                        name = p.name;
+                        transHistory = Array.append(p.transHistory, [t]);
+                    };
+                } else {
+                    p;
+                };
+            },
+        );
+        products := updatedProducts;
+
+        // Update the suppliers
+        let updatedSuppliers = Array.map<Supplier, Supplier>(
+            suppliers,
+            func(s) {
+                if (s.name == t.seller or s.name == t.buyer) {
+                    return {
+                        name = s.name;
+                        certified_date = s.certified_date;
+                        products = Array.append(s.products, [t.productId]);
+                    }
+                } else {
+                    return s;
+                }
+            }
+        );
+        suppliers := updatedSuppliers;
     };
 
     public shared func resetCanister() : async () {
