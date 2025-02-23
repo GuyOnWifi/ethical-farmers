@@ -10,14 +10,14 @@ export { idlFactory } from "./transaction_database.did.js";
  * beginning in dfx 0.15.0
  */
 export const canisterId =
-  "kpgse-bqaaa-aaaad-aakfq-cai";
+  "be2us-64aaa-aaaaa-qaabq-cai";
 
 let actorCache = null;
 
 export const createActor = (canisterId, options = {}) => {
   if (actorCache) return actorCache;
 
-  const agent = options.agent || new HttpAgent({ ...options.agentOptions, host: "https://a4gq6-oaaaa-aaaab-qaa4q-cai.raw.icp0.io" });
+  const agent = options.agent || new HttpAgent({ ...options.agentOptions, host: "http://localhost:4943" });
 
   if (options.agent && options.agentOptions) {
     console.warn(

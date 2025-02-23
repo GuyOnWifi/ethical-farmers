@@ -101,18 +101,18 @@ export default function ClientPage({ company, id }: ClientPageProps) {
 
         <div className="w-full mt-8 px-8">
           <div className="grid grid-cols-5 gap-8">
-            {products.map((product: number, index: number) => (
+            {products.map((product: bigint, index: number) => (
               <div
                 key={index}
                 className="flex justify-center"
-                onClick={() => handleProductClick(product)}
+                onClick={() => handleProductClick(Number(product))}
               >
                 <DirectionAwareHover
-                  imageUrl={PRODUCTS_LIST[product].imageURL}
+                  imageUrl={PRODUCTS_LIST[Number(product)].imageURL}
                   className="h-48 w-48 md:h-48 md:w-48 cursor-pointer"
                 >
-                  <p className="font-bold text-lg">{PRODUCTS_LIST[product].name}</p>
-                  <p className="font-normal text-xs">{PRODUCTS_LIST[product].price}</p>
+                  <p className="font-bold text-lg">{PRODUCTS_LIST[Number(product)].name}</p>
+                  <p className="font-normal text-xs">{PRODUCTS_LIST[Number(product)].price}</p>
                 </DirectionAwareHover>
               </div>
             ))}

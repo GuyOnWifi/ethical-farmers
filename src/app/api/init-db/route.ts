@@ -69,22 +69,6 @@ export async function GET() {
         }
         console.log("Products added");
 
-        // Add specific transactions for Sweet Dreams products
-        for (const productId of SWEET_DREAMS_PRODUCTS) {
-            const product = PRODUCTS_LIST.find(p => BigInt(p.id) === productId);
-            if (product) {
-                await transaction_database.addTransaction({
-                    date: BigInt(99999),
-                    productId: BigInt(product.id),
-                    productName: product.name,
-                    location: "Waterloo, ON", // Sweet Dreams location
-                    seller: SUPPLIERS_KV[Math.floor(Math.random() * SUPPLIERS_KV.length)][0],
-                    buyer: "sweet-dreams"
-                });
-            }
-        }
-        console.log("Sweet Dreams specific transactions added");
-
         return new Response("Database populated with transactions", { status: 200 });
     } catch (error: unknown) {
         console.error("Error populating database:", error);

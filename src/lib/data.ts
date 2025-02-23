@@ -296,17 +296,10 @@ const PRODUCTS_LIST: Product[] = [
     },
     {
         id: 27,
-        name: "Fair Trade Jasmine Tea",
-        price: 6.99,
-        imageURL: "/products/Jasmine.svg"
-    },
-    {
-        id: 28,
         name: "Organic Mangoes",
         price: 5.99,
         imageURL: "/products/Mango.svg"
     },
-    
 ];
 
 export { COMPANIES_LIST, PRODUCTS_LIST, SUPPLIERS_LIST };
