@@ -1,0 +1,30 @@
+type Transaction = 
+ record {
+   buyer: Supplier;
+   date: Time;
+   location: text;
+   productId: nat;
+   seller: Supplier;
+ };
+type Time = int;
+type Supplier = 
+ record {
+   certified_date: Time;
+   name: text;
+   products: vec nat;
+ };
+type Product = 
+ record {
+   id: nat;
+   name: text;
+   transHistory: vec Transaction;
+ };
+service : {
+  addProduct: (nat, text) -> ();
+  addSupplier: (Supplier) -> ();
+  addTransaction: (Transaction) -> ();
+  getAllSuppliers: () -> (vec Supplier) query;
+  getHistory: (nat) -> (vec Transaction) query;
+  getProducts: () -> (vec Product) query;
+  getSupplier: (text) -> (opt Supplier) query;
+}
