@@ -67,27 +67,11 @@ export async function GET() {
         console.log("Suppliers added");
 
         // Add all companies, with special handling for restaurants
-        for (const [id, data] of COMPANY_KV) {
-            let products: bigint[] = [];
-            
-            switch(id) {
-                case "sweet-dreams":
-                    products = SWEET_DREAMS_PRODUCTS;
-                    break;
-                case "MyungGa":
-                    products = MYUNG_GA_PRODUCTS;
-                    break;
-                case "Kens":
-                    products = KENS_PRODUCTS;
-                    break;
-                default:
-                    products = [];
-            }
-
+        for (const [id, data] of COMPANY_KV) {          
             await transaction_database.addSupplier({
                 certified_date: BigInt(99999),
                 name: id,
-                products: products
+                products: []
             });
         }
         console.log("Companies and restaurants added");

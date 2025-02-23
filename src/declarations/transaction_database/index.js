@@ -10,14 +10,14 @@ export { idlFactory } from "./transaction_database.did.js";
  * beginning in dfx 0.15.0
  */
 export const canisterId =
-  "be2us-64aaa-aaaaa-qaabq-cai";
+  "kpgse-bqaaa-aaaad-aakfq-cai";
 
 let actorCache = null;
 
 export const createActor = (canisterId, options = {}) => {
   if (actorCache) return actorCache;
 
-  const agent = options.agent || new HttpAgent({ ...options.agentOptions, host: "http://localhost:4943" });
+  const agent = options.agent || new HttpAgent({ ...options.agentOptions, host: "https://a4gq6-oaaaa-aaaab-qaa4q-cai.raw.icp0.io" });
 
   if (options.agent && options.agentOptions) {
     console.warn(
@@ -26,7 +26,8 @@ export const createActor = (canisterId, options = {}) => {
   }
 
   // Fetch root key for certificate validation during development
-  if (process.env.NEXT_PUBLIC_DFX_NETWORK !== "ic") {
+  const dev = false;
+  if (dev) {
     agent.fetchRootKey().catch((err) => {
       console.warn(
         "Unable to fetch root key. Check to ensure that your local replica is running"
