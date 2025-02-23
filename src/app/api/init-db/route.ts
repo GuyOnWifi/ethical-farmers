@@ -2,21 +2,21 @@ import { transaction_database } from "@/declarations/transaction_database";
 
 // Products with real Canadian sustainable/organic products
 const PRODUCTS = [
-    { id: 1, name: "Organic McIntosh Apples" },
-    { id: 2, name: "Fair Trade Dark Roast Coffee" },
-    { id: 3, name: "Free Range Omega-3 Eggs" },
-    { id: 4, name: "Organic Red Spring Wheat Flour" },
-    { id: 5, name: "Sustainable Atlantic Salmon" },
-    { id: 6, name: "Organic Canadian Maple Syrup" },
-    { id: 7, name: "Fair Trade Chocolate Bars" },
-    { id: 8, name: "Organic Canadian Wild Blueberries" },
-    { id: 9, name: "Grass-Fed Beef" },
-    { id: 10, name: "Organic Red Lentils" },
-    { id: 11, name: "Sustainable Canola Oil" },
-    { id: 12, name: "Organic Steel Cut Oats" },
-    { id: 13, name: "Fair Trade Green Tea" },
-    { id: 14, name: "Organic Hemp Seeds" },
-    { id: 15, name: "Sustainable Rainbow Trout" }
+    { id: 0, name: "Organic McIntosh Apples" },
+    { id: 1, name: "Fair Trade Dark Roast Coffee" },
+    { id: 2, name: "Free Range Omega-3 Eggs" },
+    { id: 3, name: "Organic Red Spring Wheat Flour" },
+    { id: 4, name: "Sustainable Atlantic Salmon" },
+    { id: 5, name: "Organic Canadian Maple Syrup" },
+    { id: 6, name: "Fair Trade Chocolate Bars" },
+    { id: 7, name: "Organic Canadian Wild Blueberries" },
+    { id: 8, name: "Grass-Fed Beef" },
+    { id: 9, name: "Organic Red Lentils" },
+    { id: 10, name: "Sustainable Canola Oil" },
+    { id: 11, name: "Organic Steel Cut Oats" },
+    { id: 12, name: "Fair Trade Green Tea" },
+    { id: 13, name: "Organic Hemp Seeds" },
+    { id: 14, name: "Sustainable Rainbow Trout" }
 ];
 
 // Major Canadian suppliers/producers
@@ -138,10 +138,15 @@ const LOCATIONS = [
 
 export async function GET() {
     try {
+
+        await transaction_database.resetCanister();
+        console.log("Canister reset");
+
         // Add all products
         for (const product of PRODUCTS) {
             await transaction_database.addProduct(BigInt(product.id), product.name);
         }
+        console.log("Products added");
 
         // Add all suppliers
         for (const supplier of SUPPLIERS) {
@@ -151,15 +156,17 @@ export async function GET() {
                 products: supplier.products.map(id => BigInt(id))
             });
         }
+        console.log("Suppliers added");
 
-        // Generate 500 transactions over the past 2 years
+
+        // Generate 10 transactions over the past 2 years
         const startDate = new Date(2023, 0, 1).getTime();
         const endDate = new Date().getTime();
 
-        for (let i = 0; i < 500; i++) {
+        for (let i = 0; i < 20; i++) {
             // Random date between start and end
             const transactionDate = BigInt(
-                startDate + Math.random() * (endDate - startDate)
+                Math.floor(startDate + Math.random() * (endDate - startDate))
             );
 
             // Random supplier
@@ -192,8 +199,9 @@ export async function GET() {
                 }
             });
         }
+        console.log("Transactions added");
 
-        return new Response("Database populated with 500 transactions", { status: 200 });
+        return new Response("Database populated with 10 transactions", { status: 200 });
     } catch (error: unknown) {
         console.error("Error populating database:", error);
         const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
