@@ -50,47 +50,78 @@ const COMPANIES_LIST: { [key: string]: Company } = {
         rating: 4.5,
     },
 }
+
 // Major Canadian suppliers/producers
-const SUPPLIERS_LIST: { [key: string]: { name: string, certified_date: bigint } } = {
+const SUPPLIERS_LIST: { [key: string]: Company & { certified_date: bigint } } = {
     "naturespathfoods": {
         name: "Nature's Path Foods",
-        certified_date: BigInt(Date.UTC(2020, 1, 15))
+        certified_date: BigInt(Date.UTC(2020, 1, 15)),
+        imageURL: "/suppliers/natures-path.svg",
+        certificates: 2,
+        rating: 4.5
     },
     "ethicalbeancoffee": {
         name: "Ethical Bean Coffee",
-        certified_date: BigInt(Date.UTC(2019, 6, 22))
+        certified_date: BigInt(Date.UTC(2019, 6, 22)),
+        imageURL: "/suppliers/ethical-bean.svg",
+        certificates: 2,
+        rating: 4.7
     },
     "mapleleaforganicfarms": {
         name: "Maple Leaf Organic Farms",
-        certified_date: BigInt(Date.UTC(2021, 3, 10))
+        certified_date: BigInt(Date.UTC(2021, 3, 10)),
+        imageURL: "/suppliers/maple-leaf.svg",
+        certificates: 2,
+        rating: 4.3
     },
     "burnbraefarms": {
         name: "Burnbrae Farms",
-        certified_date: BigInt(Date.UTC(2018, 11, 5))
+        certified_date: BigInt(Date.UTC(2018, 11, 5)),
+        imageURL: "/suppliers/burnbrae.svg",
+        certificates: 2,
+        rating: 4.6
     },
     "truenorthsalmonco": {
         name: "True North Salmon Co.",
-        certified_date: BigInt(Date.UTC(2020, 8, 30))
+        certified_date: BigInt(Date.UTC(2020, 8, 30)),
+        imageURL: "/suppliers/true-north.svg",
+        certificates: 2,
+        rating: 4.4
     },
     "stlawrencedistillers": {
         name: "St-Lawrence Distillers",
-        certified_date: BigInt(Date.UTC(2019, 2, 15))
+        certified_date: BigInt(Date.UTC(2019, 2, 15)),
+        imageURL: "/suppliers/st-lawrence.svg",
+        certificates: 2,
+        rating: 4.8
     },
     "camino": {
         name: "Camino",
-        certified_date: BigInt(Date.UTC(2021, 5, 8))
+        certified_date: BigInt(Date.UTC(2021, 5, 8)),
+        imageURL: "/suppliers/camino.svg",
+        certificates: 2,
+        rating: 4.6
     },
     "bluerangefarms": {
         name: "Blue Range Farms",
-        certified_date: BigInt(Date.UTC(2020, 4, 12))
+        certified_date: BigInt(Date.UTC(2020, 4, 12)),
+        imageURL: "/suppliers/blue-range.svg",
+        certificates: 2,
+        rating: 4.5
     },
     "agtfoodandingredients": {
         name: "AGT Food and Ingredients",
-        certified_date: BigInt(Date.UTC(2019, 9, 25))
+        certified_date: BigInt(Date.UTC(2019, 9, 25)),
+        imageURL: "/suppliers/agt.svg",
+        certificates: 2,
+        rating: 4.4
     },
     "richardsonoilseed": {
         name: "Richardson Oilseed",
-        certified_date: BigInt(Date.UTC(2021, 1, 18))
+        certified_date: BigInt(Date.UTC(2021, 1, 18)),
+        imageURL: "/suppliers/richardson.svg",
+        certificates: 2,
+        rating: 4.5
     }
 };
 
