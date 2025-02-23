@@ -94,7 +94,7 @@ export default function Page() {
     setProduceMsg("Setting...")
     try {
       await transaction_database.addTransaction({
-        productId: BigInt(Math.floor(Math.random() * 10000)),
+        productId: BigInt(27),
         productName: produceInput,
         date: BigInt(Date.now()),
         location: "here",
