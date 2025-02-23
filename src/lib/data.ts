@@ -54,7 +54,19 @@ const COMPANIES_LIST: { [key: string]: Company } = {
         name: "Sweet Dreams Teashop",
         certificates: 2,
         rating: 5,
-    }
+    },
+    "sweet-a": {
+        imageURL: "/sweet-dreams.svg",
+        name: "Sweet Dreamsa Teashop",
+        certificates: 2,
+        rating: 5,
+    },
+    "sweet-b": {
+        imageURL: "/sweet-dreams.svg",
+        name: "Sweet Dreamws Teashop",
+        certificates: 2,
+        rating: 5,
+    },
 }
 
 // Major Canadian suppliers/producers
