@@ -49,6 +49,12 @@ const COMPANIES_LIST: { [key: string]: Company } = {
         certificates: 2,
         rating: 4.5,
     },
+    "sweet-dreams": {
+        imageURL: "/sweet-dreams.svg",
+        name: "Sweet Dreams Teashop",
+        certificates: 2,
+        rating: 5,
+    }
 }
 
 // Major Canadian suppliers/producers
@@ -281,7 +287,26 @@ const PRODUCTS_LIST: Product[] = [
         name: "Sustainable Arctic Char",
         price: 26.99,
         imageURL: "/products/arctic-char.svg"
-    }
+    },
+    {
+        id: 26,
+        name: "Fair Trade Jasmine Tea",
+        price: 6.99,
+        imageURL: "/products/Jasmine.svg"
+    },
+    {
+        id: 27,
+        name: "Fair Trade Jasmine Tea",
+        price: 6.99,
+        imageURL: "/products/Jasmine.svg"
+    },
+    {
+        id: 28,
+        name: "Organic Mangoes",
+        price: 5.99,
+        imageURL: "/products/Mango.svg"
+    },
+    
 ];
 
 export { COMPANIES_LIST, PRODUCTS_LIST, SUPPLIERS_LIST };
