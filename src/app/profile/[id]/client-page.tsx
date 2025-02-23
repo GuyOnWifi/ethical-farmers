@@ -99,13 +99,13 @@ export default function ClientPage({ company, id }: ClientPageProps) {
           </div>
         </div>
 
-        <header className="flex w-3/4 space-x-32 mt-24">
+        <header className="flex w-3/4 space-x-16 md:space-x-32 mt-24">
           <h1 className="text-2xl text-black font-bold">Search for Verified Ethical Produce</h1>
           <SearchBar />
         </header>
 
         <div className="w-full mt-8 px-8">
-          <div className="grid grid-cols-5 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
             {products.map((product: bigint, index: number) => (
               <div
                 key={index}
