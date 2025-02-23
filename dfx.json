@@ -3,6 +3,11 @@
       "transaction_database": {
         "main": "src/canisters/transactions/main.mo",
         "type": "motoko"
+      },
+      "frontend": {
+        "entrypoint": "out/index.html",
+        "source": ["out"],
+        "type": "assets"
       }
     }
   }
